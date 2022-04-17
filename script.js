@@ -1,3 +1,4 @@
+// create operators
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
@@ -37,38 +38,21 @@ addLabel(buttons.childNodes[9], '2', 'two');
 addLabel(buttons.childNodes[10], '3', 'three');
 addLabel(buttons.childNodes[11], '-', 'minus');
 addLabel(buttons.childNodes[12], '0', 'zero');
-addLabel(buttons.childNodes[13], '\u30FB', 'decimal');
+addLabel(buttons.childNodes[13], '.', 'decimal');
 addLabel(buttons.childNodes[14], '+', 'plus');
 addLabel(buttons.childNodes[15], '=', 'equals');
 
-span.textContent = '0';
-
-const populateDisplay = () => {
-  let displayValue = '';
-  let value = 0;
-
-  buttons.childNodes.forEach(btn => {
-    btn.addEventListener('click', e => {
-      if (e.target.id !== 'divide' && e.target.id !== 'multiply' && e.target.id !== 'minus' && e.target.id !== 'plus' && e.target.id !== 'equals') {
-        displayValue += btn.textContent;
-      }
-      else {
-        span.textContent = '0';
-        return;
-      }
-
-      span.textContent = displayValue;
-      console.log(displayValue);
-    });
-
-    value = parseInt(displayValue);
-  });
-  clear.addEventListener('click', () => {
+// clear content of display
+const clearDisplay = (elem) => {
+  elem.addEventListener('click', () => {
     displayValue = '';
     span.textContent = '0';
   });
+}
 
-  del.addEventListener('click', () => {
+// delete last digit on the display
+const deleteDisplay = (elem) => {
+  elem.addEventListener('click', () => {
     displayValue = displayValue.slice(0, displayValue.length - 1);
     span.textContent = displayValue;
     if (displayValue === '') {
@@ -77,6 +61,35 @@ const populateDisplay = () => {
   });
 }
 
+const concatInput = (elem) => {
+  elem.addEventListener('click', e => {
+
+    if (e.target.id !== 'plus' && e.target.id !== 'minus' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
+      displayValue += elem.textContent;
+      value = parseInt(displayValue);
+      span.textContent = displayValue;
+      console.log(displayValue);
+    }
+
+  });
+}
+
+
+let displayValue = '';
+let value = 0;
+span.textContent = '0';
+
+const main = () => {
+
+  buttons.childNodes.forEach(btn => {
+    concatInput(btn);
+
+  });
+
+  clearDisplay(clear);
+  deleteDisplay(del);
+}
+
 window.onload = () => {
-  populateDisplay();
+  main();
 }
