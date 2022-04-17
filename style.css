@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -30,12 +31,21 @@ body {
 }
 
 .display {
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
   width: calc(22.8rem + 6px);
   height: 5rem;
   background-color: #FFFCEB;
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
+}
+
+.display span {
+  font-size: 2.4rem;
+  font-style: italic;
+  margin-right: 1rem;
 }
 
 .top-row {
@@ -46,11 +56,16 @@ body {
 .clear,
 .delete {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc(10.6rem + 2px);
   height: 3.6rem;
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .clear {
@@ -70,10 +85,16 @@ body {
 }
 
 .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 4.5rem;
   height: 3.6rem;
   background-color: #FFF099;
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  cursor: pointer;
 }
