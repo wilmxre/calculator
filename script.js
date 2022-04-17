@@ -8,6 +8,8 @@ const operate = (operator, a, b) => operator(a, b);
 const calculator = document.querySelector('.calculator');
 const buttons = document.querySelector('.buttons');
 const span = document.querySelector('span');
+const clear = document.querySelector('.clear');
+const del = document.querySelector('.delete');
 
 //create buttons
 for (let i = 0; i < 16; i++) {
@@ -41,16 +43,39 @@ addLabel(buttons.childNodes[15], '=', 'equals');
 
 span.textContent = '0';
 
-let populateDisplay = () => {
-  buttons.childNodes.forEach(elem => {
-    let displayValue = 0;
-    elem.addEventListener('click', e => {
-      displayValue = elem.textContent;
+const populateDisplay = () => {
+  let displayValue = '';
+  let value = 0;
+
+  buttons.childNodes.forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (e.target.id !== 'divide' && e.target.id !== 'multiply' && e.target.id !== 'minus' && e.target.id !== 'plus' && e.target.id !== 'equals') {
+        displayValue += btn.textContent;
+      }
+      else {
+        span.textContent = '0';
+        return;
+      }
+
       span.textContent = displayValue;
-    })
+      console.log(displayValue);
+    });
+
+    value = parseInt(displayValue);
+  });
+  clear.addEventListener('click', () => {
+    displayValue = '';
+    span.textContent = '0';
+  });
+
+  del.addEventListener('click', () => {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+    span.textContent = displayValue;
+    if (displayValue === '') {
+      span.textContent = '0';
+    }
   });
 }
-
 
 window.onload = () => {
   populateDisplay();
