@@ -36,7 +36,22 @@ addLabel(buttons.childNodes[10], '3', 'three');
 addLabel(buttons.childNodes[11], '-', 'minus');
 addLabel(buttons.childNodes[12], '0', 'zero');
 addLabel(buttons.childNodes[13], '\u30FB', 'decimal');
-addLabel(buttons.childNodes[14], '=', 'equals');
-addLabel(buttons.childNodes[15], '+', 'plus');
+addLabel(buttons.childNodes[14], '+', 'plus');
+addLabel(buttons.childNodes[15], '=', 'equals');
 
-span.textContent = '123456';
+span.textContent = '0';
+
+let populateDisplay = () => {
+  buttons.childNodes.forEach(elem => {
+    let displayValue = 0;
+    elem.addEventListener('click', e => {
+      displayValue = elem.textContent;
+      span.textContent = displayValue;
+    })
+  });
+}
+
+
+window.onload = () => {
+  populateDisplay();
+}
