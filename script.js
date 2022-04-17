@@ -9,8 +9,12 @@ const calculator = document.querySelector('.calculator');
 const buttons = document.querySelector('.buttons');
 // const btn = document.querySelector('.btn');
 
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 16; i++) {
   const btn = document.createElement('div');
   btn.classList.add('btn');
   buttons.appendChild(btn)
+}
+
+const addLabel = (elem, label) => {
+  elem.textContent = label;
 }
