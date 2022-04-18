@@ -36,10 +36,10 @@ addLabel(buttons.childNodes[7], '\u00D7', 'multiply');
 addLabel(buttons.childNodes[8], '1', 'one');
 addLabel(buttons.childNodes[9], '2', 'two');
 addLabel(buttons.childNodes[10], '3', 'three');
-addLabel(buttons.childNodes[11], '-', 'minus');
+addLabel(buttons.childNodes[11], '-', 'subtract');
 addLabel(buttons.childNodes[12], '0', 'zero');
 addLabel(buttons.childNodes[13], '.', 'decimal');
-addLabel(buttons.childNodes[14], '+', 'plus');
+addLabel(buttons.childNodes[14], '+', 'add');
 addLabel(buttons.childNodes[15], '=', 'equals');
 
 // clear content of display
@@ -61,29 +61,72 @@ const deleteDisplay = (elem) => {
   });
 }
 
+
+span.textContent = '0';
+let displayValue = '';
+let command = '';
+
+let curValue = 0;
+let prevValue = 0;
+value = 0;
+
+// concatenate user input
 const concatInput = (elem) => {
   elem.addEventListener('click', e => {
+    let check = false;
 
-    if (e.target.id !== 'plus' && e.target.id !== 'minus' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
+    if (e.target.id !== 'add' && e.target.id !== 'subtract' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
       displayValue += elem.textContent;
-      value = parseInt(displayValue);
+      prevValue = parseInt(displayValue);
       span.textContent = displayValue;
-      console.log(displayValue);
+      check = true;
+    }
+
+    else if (e.target.id !== 'equals') {
+      value = prevValue;
+      prevValue = curValue;
+      curValue = value;
+      command = elem.id;
+
+      prevValue = 0;
+      displayValue = '';
+      check = true;
+    }
+
+    else {
+      if (check == true) {
+        displayValue += '';
+        console.table(0, { curValue }, { prevValue })
+        console.log({ displayValue });
+        command = elem.id;
+      }
+
+      else {
+        span.textContent = operations(command, prevValue, curValue);
+      }
     }
 
   });
 }
 
-
-let displayValue = '';
-let value = 0;
-span.textContent = '0';
+const operations = (id, a, b) => {
+  switch (id) {
+    case 'add':
+      return operate(add, a, b);
+    case 'subtract':
+      return operate(subtract, a, b);
+    case 'multiply':
+      return operate(multiply, a, b);
+    case 'divide':
+      return operate(divide, a, b);
+    default:
+  }
+}
 
 const main = () => {
 
   buttons.childNodes.forEach(btn => {
     concatInput(btn);
-
   });
 
   clearDisplay(clear);
