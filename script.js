@@ -48,6 +48,7 @@ const clearDisplay = (elem) => {
   elem.addEventListener('click', () => {
     displayValue = '';
     res.textContent = '0';
+    op.textContent = '';
   });
 }
 
@@ -97,6 +98,7 @@ const concatInput = (elem) => {
 
       prevValue = 0;
       displayValue = '';
+      op.textContent = curValue + ' ' + e.target.textContent;
     }
 
     else {
@@ -106,7 +108,7 @@ const concatInput = (elem) => {
       }
 
       else {
-        console.table(curValue, prevValue);
+        op.textContent += ' ' + prevValue + ' ' + elem.textContent;
         res.textContent = prevValue = isFloat(operations(command, curValue, prevValue));
         displayValue = res.textContent;
       }

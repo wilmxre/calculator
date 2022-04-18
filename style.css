@@ -42,10 +42,16 @@ body {
   margin: .8rem;
 }
 
-.display span .bottom {
+.bottom,
+.top {
   font-size: 2.4rem;
   font-style: italic;
   margin-right: 1rem;
+  text-align: end;
+}
+
+.top {
+  font-size: 1.4rem;
 }
 
 .top-row {
