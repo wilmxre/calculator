@@ -72,6 +72,12 @@ const isFloat = (number) => {
   else return number;
 }
 
+const decimalPoint = (str) => {
+  if (typeof str === typeof 'abc') {
+    return
+  }
+}
+
 res.textContent = '0';
 let displayValue = '';
 let command = '';
@@ -84,12 +90,15 @@ value = 0;
 const concatInput = (elem) => {
   elem.addEventListener('click', e => {
 
+    // if the button is a number (or decimal point)
     if (e.target.id !== 'add' && e.target.id !== 'subtract' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
+      if (e.target.id === 'decimal') displayValue = '0';
       displayValue += elem.textContent;
-      prevValue = parseInt(displayValue);
+      prevValue = parseFloat(displayValue);
       res.textContent = displayValue;
     }
 
+    // if the button is an operation mark, but not the equals sign
     else if (e.target.id !== 'equals') {
       value = prevValue;
       prevValue = curValue;
@@ -101,12 +110,16 @@ const concatInput = (elem) => {
       op.textContent = curValue + ' ' + e.target.textContent;
     }
 
+
+    // if the button is the equals sign
     else {
-      if (prevValue == 0) {
+      //  if the equals sign was pressed the first time, without any number input
+      if (displayValue === '') {
         displayValue += '';
         command = elem.id;
       }
 
+      // if the equals sign was pressed after some number was taken
       else {
         op.textContent += ' ' + prevValue + ' ' + elem.textContent;
         res.textContent = prevValue = isFloat(operations(command, curValue, prevValue));
@@ -132,6 +145,7 @@ const operations = (id, a, b) => {
   }
 }
 
+// driver function
 const main = () => {
 
   buttons.childNodes.forEach(btn => {
