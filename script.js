@@ -102,7 +102,7 @@ const concatInput = (elem) => {
       }
 
       else {
-        span.textContent = operations(command, prevValue, curValue);
+        span.textContent = prevValue = operations(command, prevValue, curValue);
       }
     }
 
