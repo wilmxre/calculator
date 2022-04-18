@@ -8,7 +8,8 @@ const operate = (operator, a, b) => operator(a, b);
 
 const calculator = document.querySelector('.calculator');
 const buttons = document.querySelector('.buttons');
-const span = document.querySelector('span');
+const res = document.querySelector('.bottom');
+const op = document.querySelector('.top');
 const clear = document.querySelector('.clear');
 const del = document.querySelector('.delete');
 
@@ -46,7 +47,7 @@ addLabel(buttons.childNodes[15], '=', 'equals');
 const clearDisplay = (elem) => {
   elem.addEventListener('click', () => {
     displayValue = '';
-    span.textContent = '0';
+    res.textContent = '0';
   });
 }
 
@@ -54,15 +55,23 @@ const clearDisplay = (elem) => {
 const deleteDisplay = (elem) => {
   elem.addEventListener('click', () => {
     displayValue = displayValue.slice(0, displayValue.length - 1);
-    span.textContent = displayValue;
+    prevValue = parseInt(displayValue);
+    res.textContent = displayValue;
     if (displayValue === '') {
-      span.textContent = '0';
+      res.textContent = '0';
     }
   });
 }
 
+// convert floating number to limited decimals
+const isFloat = (number) => {
+  if (Math.abs(number % 1) !== 0) {
+    return parseFloat(number.toFixed(5));
+  }
+  else return number;
+}
 
-span.textContent = '0';
+res.textContent = '0';
 let displayValue = '';
 let command = '';
 
@@ -73,13 +82,11 @@ value = 0;
 // concatenate user input
 const concatInput = (elem) => {
   elem.addEventListener('click', e => {
-    let check = false;
 
     if (e.target.id !== 'add' && e.target.id !== 'subtract' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
       displayValue += elem.textContent;
       prevValue = parseInt(displayValue);
-      span.textContent = displayValue;
-      check = true;
+      res.textContent = displayValue;
     }
 
     else if (e.target.id !== 'equals') {
@@ -90,25 +97,25 @@ const concatInput = (elem) => {
 
       prevValue = 0;
       displayValue = '';
-      check = true;
     }
 
     else {
-      if (check == true) {
+      if (prevValue == 0) {
         displayValue += '';
-        console.table(0, { curValue }, { prevValue })
-        console.log({ displayValue });
         command = elem.id;
       }
 
       else {
-        span.textContent = prevValue = operations(command, prevValue, curValue);
+        console.table(curValue, prevValue);
+        res.textContent = prevValue = isFloat(operations(command, curValue, prevValue));
+        displayValue = res.textContent;
       }
     }
 
   });
 }
 
+// do the specific operation
 const operations = (id, a, b) => {
   switch (id) {
     case 'add':
