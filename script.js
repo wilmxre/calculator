@@ -15,7 +15,7 @@ const del = document.querySelector('.delete');
 
 //create buttons
 for (let i = 0; i < 16; i++) {
-  const btn = document.createElement('div');
+  const btn = document.createElement('button');
   btn.classList.add('btn');
   buttons.appendChild(btn)
 }
@@ -49,6 +49,7 @@ const clearDisplay = (elem) => {
     displayValue = '';
     res.textContent = '0';
     op.textContent = '';
+    prevValue = curValue = 0;
   });
 }
 
@@ -56,7 +57,7 @@ const clearDisplay = (elem) => {
 const deleteDisplay = (elem) => {
   elem.addEventListener('click', () => {
     displayValue = displayValue.slice(0, displayValue.length - 1);
-    prevValue = parseInt(displayValue);
+    curValue = parseInt(displayValue);
     res.textContent = displayValue;
     if (displayValue === '') {
       res.textContent = '0';
@@ -72,57 +73,69 @@ const isFloat = (number) => {
   else return number;
 }
 
-const decimalPoint = (str) => {
-  if (typeof str === typeof 'abc') {
-    return
-  }
-}
-
 res.textContent = '0';
 let displayValue = '';
 let command = '';
+let commands = [];
 
 let curValue = 0;
 let prevValue = 0;
-value = 0;
+let valArr = [];
+let equals = [false, false];
 
 // concatenate user input
 const concatInput = (elem) => {
+
   elem.addEventListener('click', e => {
 
-    // if the button is a number (or decimal point)
-    if (e.target.id !== 'add' && e.target.id !== 'subtract' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals') {
-      if (e.target.id === 'decimal') displayValue = '0';
-      displayValue += elem.textContent;
-      prevValue = parseFloat(displayValue);
-      res.textContent = displayValue;
+    // if the starting button is a decimal point, the display text is 0.5 instead of .5
+    if (e.target.id === 'decimal' && displayValue === '') displayValue = '0';
+
+    // if the button is a number
+    if (e.target.id !== 'add' && e.target.id !== 'subtract' && e.target.id !== 'multiply' && e.target.id !== 'divide' && e.target.id !== 'equals' && e.target.id !== 'decimal') {
+      res.textContent = displayValue += elem.textContent;
+      curValue = parseFloat(displayValue);
     }
 
-    // if the button is an operation mark, but not the equals sign
-    else if (e.target.id !== 'equals') {
-      value = prevValue;
-      prevValue = curValue;
-      curValue = value;
+    // if the button is a decimal point, let it used only once
+    else if (e.target.id === 'decimal' && displayValue.split('.').length - 1 < 1) {
+      res.textContent = displayValue += elem.textContent;
+      curValue = parseFloat(displayValue);
+    }
+
+    // if the button is an operation mark, but not the equals sign or decimal point
+    else if (e.target.id !== 'equals' && e.target.id !== 'decimal') {
       command = elem.id;
+      commands.push(command);
+      equals.push(false);
 
-      prevValue = 0;
+      console.log(equals[equals.length - 2], equals)
+
+
+      if (displayValue !== '' && prevValue !== 0) {
+        displayValue = curValue = isFloat(operations(commands[commands.length - 2], prevValue, curValue));
+        res.textContent = displayValue;
+      }
+
+      prevValue = curValue;
+      curValue = 0;
       displayValue = '';
-      op.textContent = curValue + ' ' + e.target.textContent;
+      op.textContent = prevValue + ' ' + e.target.textContent;
     }
-
 
     // if the button is the equals sign
-    else {
+    else if (e.target.id === 'equals') {
+      equals.push(true);
       //  if the equals sign was pressed the first time, without any number input
       if (displayValue === '') {
         displayValue += '';
-        command = elem.id;
       }
 
       // if the equals sign was pressed after some number was taken
-      else {
-        op.textContent += ' ' + prevValue + ' ' + elem.textContent;
-        res.textContent = prevValue = isFloat(operations(command, curValue, prevValue));
+      else if (valArr[valArr.length - 1] !== prevValue) {
+        valArr.push(prevValue);
+        op.textContent += ' ' + curValue + ' ' + elem.textContent;
+        res.textContent = curValue = isFloat(operations(command, prevValue, curValue));
         displayValue = res.textContent;
       }
     }
