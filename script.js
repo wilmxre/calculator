@@ -68,7 +68,7 @@ const deleteDisplay = (elem) => {
 // convert floating number to limited decimals
 const isFloat = (number) => {
   if (Math.abs(number % 1) !== 0) {
-    return parseFloat(number.toFixed(5));
+    return parseFloat(number.toFixed(3));
   }
   else return number;
 }
@@ -109,11 +109,7 @@ const concatInput = (elem) => {
       commands.push(command);
       equals.push(false);
 
-      console.log(typeof equals[equals.length - 2], equals[equals.length - 2])
-
-
       if (displayValue !== '' && prevValue !== 0 && equals[equals.length - 2] !== true) {
-        console.log('yo')
         displayValue = curValue = isFloat(operations(commands[commands.length - 2], prevValue, curValue));
         res.textContent = displayValue;
       }
