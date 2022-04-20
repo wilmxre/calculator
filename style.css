@@ -6,11 +6,27 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #DCD6F7;
+  background-color: #D5F2E3;
   height: 100vh;
   --border: #000000;
+}
+
+.credits {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+}
+
+.credits a {
+  all: unset;
+  cursor: pointer;
+}
+
+.credits img {
+  width: 1.6rem;
+  height: auto;
 }
 
 .calculator {
@@ -18,7 +34,7 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 26.7rem;
-  height: 35rem;
+  height: 37rem;
   background-color: #1b1b1b;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -35,8 +51,8 @@ body {
   justify-content: end;
   align-items: flex-end;
   width: calc(22.8rem + 6px);
-  height: 5rem;
-  background-color: #FFFCEB;
+  height: 7.4rem;
+  background-color: #EDEBD7;
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
@@ -81,12 +97,28 @@ body {
 }
 
 .clear {
-  background-color: #6BAB90;
+  background-color: #2FB8DA;
+}
+
+.clear:hover {
+  background-color: #40BEDD;
+}
+
+.clear:active {
+  background-color: #25AED0;
 }
 
 .delete {
   display: flex;
-  background-color: #C05746;
+  background-color: #DD404B;
+}
+
+.delete:hover {
+  background-color: #E0525B;
+}
+
+.delete:active {
+  background-color: #DA2F3A;
 }
 
 .buttons {
@@ -109,4 +141,42 @@ body {
   font-size: 2rem;
   cursor: pointer;
   user-select: none;
+}
+
+.btn:hover {
+  background-color: #FFF3AD;
+}
+
+.btn:active {
+  background-color: #FFED85;
+}
+
+.operator {
+  background-color: #FB8500;
+}
+
+.operator:hover {
+  background-color: #FF961F;
+}
+
+.operator:active {
+  background-color: #F58300;
+}
+
+.eq {
+  background-color: #45CB85;
+}
+
+.eq:hover {
+  background-color: #60D297;
+}
+
+.eq:active {
+  background-color: #36BF78;
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    zoom: 50%;
+  }
 }
