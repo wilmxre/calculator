@@ -7,6 +7,7 @@ const divide = (a, b) => a / b;
 const operate = (operator, a, b) => operator(a, b);
 
 const calculator = document.querySelector('.calculator');
+const display = document.querySelector('.display');
 const buttons = document.querySelector('.buttons');
 const res = document.querySelector('.bottom');
 const op = document.querySelector('.top');
@@ -43,6 +44,12 @@ addLabel(buttons.childNodes[13], '.', 'decimal');
 addLabel(buttons.childNodes[14], '+', 'add');
 addLabel(buttons.childNodes[15], '=', 'equals');
 
+// reset calculator to its original size
+resetDisplay = (size = 0) => {
+  calculator.style = `height: ${35 + size}rem`;
+  display.style = `height: ${5 + size}rem`;
+}
+
 // clear content of display
 const clearDisplay = (elem) => {
   elem.addEventListener('click', () => {
@@ -50,6 +57,7 @@ const clearDisplay = (elem) => {
     res.textContent = '0';
     op.textContent = '';
     prevValue = curValue = 0;
+    resetDisplay();
   });
 }
 
@@ -73,6 +81,14 @@ const isFloat = (number) => {
   else return number;
 }
 
+const adjustDisplay = (size) => {
+  if (size > 15) {
+    let computedSize = parseInt(size / 16) * 2.7;
+    display.style = `height: ${5 + computedSize}rem;`;
+    calculator.style = `height: ${35 + computedSize}rem;`;
+  }
+}
+
 res.textContent = '0';
 let displayValue = '';
 let command = '';
@@ -85,9 +101,9 @@ let equals = [false, false];
 
 // concatenate user input
 const concatInput = (elem) => {
-
   elem.addEventListener('click', e => {
 
+    adjustDisplay(displayValue.length);
     // if the starting button is a decimal point, the display text is 0.5 instead of .5
     if (e.target.id === 'decimal' && displayValue === '') displayValue = '0';
 
@@ -122,6 +138,8 @@ const concatInput = (elem) => {
 
     // if the button is the equals sign
     else if (e.target.id === 'equals') {
+      resetDisplay(2.4);
+
       equals.push(true);
       //  if the equals sign was pressed the first time, without any number input
       if (displayValue === '') {
@@ -136,7 +154,6 @@ const concatInput = (elem) => {
         displayValue = res.textContent;
       }
     }
-
   });
 }
 

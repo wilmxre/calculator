@@ -18,7 +18,7 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 26.7rem;
-  height: 35em;
+  height: 35rem;
   background-color: #1b1b1b;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -40,6 +40,8 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .bottom,
@@ -47,7 +49,11 @@ body {
   font-size: 2.4rem;
   font-style: italic;
   margin-right: 1rem;
+  margin-right: 1rem;
   text-align: end;
+  max-width: 21rem;
+  word-wrap: break-word;
+  display: inline-block;
 }
 
 .top {
@@ -69,9 +75,9 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 1.6rem;
   cursor: pointer;
+  user-select: none;
 }
 
 .clear {
@@ -100,7 +106,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   margin: .8rem;
-  font-size: 2.4rem;
-  font-weight: 500;
+  font-size: 2rem;
   cursor: pointer;
+  user-select: none;
 }
